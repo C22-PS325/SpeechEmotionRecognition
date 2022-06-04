@@ -1,1 +1,1 @@
-# SpeecjEmotionRecognition
+# SpeechEmotionRecognition
