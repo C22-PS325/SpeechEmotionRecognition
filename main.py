@@ -29,6 +29,37 @@ if not sys.warnoptions:
     warnings.simplefilter("ignore")
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
+!pip install kaggle
+
+!mkdir .kaggle
+
+import json
+
+token = {"username":"alianurrahman","key":"b4ed2a245ca79faf37057b902764a6fc"}
+
+with open('/content/.kaggle/kaggle.json', 'w') as file:
+  json.dump(token, file)
+
+!chmod 600 /content/.kaggle/kaggle.json
+
+!cp /content/.kaggle/kaggle.json ~/.kaggle/kaggle.json
+
+!kaggle config set -n path -v{/content}
+
+!kaggle datasets download -d ejlok1/cremad -p /content
+!kaggle datasets download -d uwrfkaggler/ravdess-emotional-speech-audio -p /content
+!kaggle datasets download -d ejlok1/surrey-audiovisual-expressed-emotion-savee -p /content
+!kaggle datasets download -d ejlok1/toronto-emotional-speech-set-tess -p /content
+
+!unzip \*.zip
+
+# Paths for data.
+Ravdess = "/content/audio_speech_actors_01-24/"
+Crema = "/content/AudioWAV/" #aman
+Tess = "/content/tess toronto emotional speech set data/TESS Toronto emotional speech set data/" #aman
+Savee = "/content/ALL/"
+
+
 def create_waveplot(data, sr, e):
     plt.figure(figsize=(10, 3))
     plt.title('Waveplot for audio with {} emotion'.format(e), size=15)
