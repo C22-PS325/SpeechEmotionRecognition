@@ -35,7 +35,7 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 import json
 
-token = {"username":"alianurrahman","key":"b4ed2a245ca79faf37057b902764a6fc"}
+token = {"username":"","key":""}
 
 with open('/content/.kaggle/kaggle.json', 'w') as file:
   json.dump(token, file)
@@ -182,6 +182,13 @@ data_path = pd.concat([Ravdess_df, Crema_df, Tess_df, Savee_df], axis = 0)
 data_path.to_csv("data_path.csv",index=False)
 data_path.head()
 
+plt.title('Count of Emotions', size=16)
+sns.countplot(data_path.Emotions)
+plt.ylabel('Count', size=12)
+plt.xlabel('Emotions', size=12)
+sns.despine(top=True, right=True, left=False, bottom=False)
+plt.show()
+
 
 def create_waveplot(data, sr, e):
     plt.figure(figsize=(10, 3))
@@ -200,6 +207,20 @@ def create_spectrogram(data, sr, e):
     plt.colorbar()
 
 
+def noise(data):
+    noise_amp = 0.035*np.random.uniform()*np.amax(data)
+    data = data + noise_amp*np.random.normal(size=data.shape[0])
+    return data
+
+def stretch(data, rate=0.8):
+    return librosa.effects.time_stretch(data, rate)
+
+def shift(data):
+    shift_range = int(np.random.uniform(low=-5, high = 5)*1000)
+    return np.roll(data, shift_range)
+
+def pitch(data, sampling_rate, pitch_factor=0.7):
+    return librosa.effects.pitch_shift(data, sampling_rate, pitch_factor)
 
 # taking any example and checking for techniques.
 path = np.array(data_path.Path)[1]
