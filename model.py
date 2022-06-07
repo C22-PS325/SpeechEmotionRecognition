@@ -202,3 +202,15 @@ ax[1].set_title('Training & Testing Accuracy')
 ax[1].legend()
 ax[1].set_xlabel("Epochs")
 plt.show()
+
+# predicting on test data.
+pred_test = model.predict(x_test)
+y_pred = encoder.inverse_transform(pred_test)
+
+y_test = encoder.inverse_transform(y_test)
+
+df = pd.DataFrame(columns=['Predicted Labels', 'Actual Labels'])
+df['Predicted Labels'] = y_pred.flatten()
+df['Actual Labels'] = y_test.flatten()
+
+df.head(10)
