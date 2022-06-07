@@ -4,6 +4,10 @@ import numpy as np
 import os
 import sys
 
+import augmentation
+import exploration
+import extraction
+
 # librosa is a Python library for analyzing audio and music. It can be used to extract the data from the audio files.
 import librosa
 import librosa.display
@@ -14,6 +18,8 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.model_selection import train_test_split
 
 # to play the audio files
+from IPython.display import Audio
+
 from keras.callbacks import ReduceLROnPlateau
 from keras.models import Sequential
 from keras.layers import Dense, Conv1D, MaxPooling1D, Flatten, Dropout, BatchNormalization
@@ -32,6 +38,15 @@ path = np.array(data_path.Path)[1]
 data, sample_rate = librosa.load(path)
 
 # import extraction.py
+X, Y = [], []
+for path, emotion in zip(data_path.Path, data_path.Emotions):
+    feature = get_features(path)
+    for ele in feature:
+        X.append(ele)
+        # appending emotion 3 times as we have made 3 augmentation techniques on each audio file.
+        Y.append(emotion)
+
+len(X), len(Y), data_path.Path.shape
 
 Features = pd.DataFrame(X)
 Features['labels'] = Y

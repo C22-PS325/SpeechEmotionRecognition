@@ -44,12 +44,3 @@ def get_features(path):
     
     return result
 
-X, Y = [], []
-for path, emotion in zip(data_path.Path, data_path.Emotions):
-    feature = get_features(path)
-    for ele in feature:
-        X.append(ele)
-        # appending emotion 3 times as we have made 3 augmentation techniques on each audio file.
-        Y.append(emotion)
-
-len(X), len(Y), data_path.Path.shape
