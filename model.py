@@ -123,3 +123,8 @@ for path, emotion in zip(data_path.Path, data_path.Emotions):
         Y.append(emotion)
 
 len(X), len(Y), data_path.Path.shape
+
+Features = pd.DataFrame(X)
+Features['labels'] = Y
+Features.to_csv('features.csv', index=False)
+Features.head()
